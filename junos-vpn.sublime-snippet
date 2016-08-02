@@ -1,0 +1,41 @@
+<snippet>
+	<content>
+	<![CDATA[
+set security ike proposal ike-prop-vpn-${1:VPN_NAME} authentication-method pre-shared-keys 
+set security ike proposal ike-prop-vpn-${1:VPN_NAME} authentication-algorithm sha1
+set security ike proposal ike-prop-vpn-${1:VPN_NAME} encryption-algorithm aes-128-cbc
+set security ike proposal ike-prop-vpn-${1:VPN_NAME} lifetime-seconds 28800
+set security ike proposal ike-prop-vpn-${1:VPN_NAME} dh-group group2
+
+set security ike policy ike-pol-vpn-${1:VPN_NAME} mode main 
+set security ike policy ike-pol-vpn-${1:VPN_NAME} proposals ike-prop-vpn-${1:VPN_NAME}
+set security ike policy ike-pol-vpn-${1:VPN_NAME} pre-shared-key ascii-text ${2:PRE_SHARED_KEY}
+
+set security ike gateway gw-vpn-${1:VPN_NAME} ike-policy ike-pol-vpn-${1:VPN_NAME}
+set security ike gateway gw-vpn-${1:VPN_NAME} external-interface ${3:ge-0/0/0}
+set security ike gateway gw-vpn-${1:VPN_NAME} address ${4:192.0.2.1}
+
+set security ipsec proposal ipsec-prop-vpn-${1:VPN_NAME} protocol esp
+set security ipsec proposal ipsec-prop-vpn-${1:VPN_NAME} authentication-algorithm hmac-sha1-96
+set security ipsec proposal ipsec-prop-vpn-${1:VPN_NAME} encryption-algorithm aes-128-cbc
+set security ipsec proposal ipsec-prop-vpn-${1:VPN_NAME} lifetime-seconds 3600
+
+set security ipsec policy ipsec-pol-vpn-${1:VPN_NAME} perfect-forward-secrecy keys group2
+set security ipsec policy ipsec-pol-vpn-${1:VPN_NAME} proposals ipsec-prop-vpn-${1:VPN_NAME}
+
+set security ipsec vpn vpn-${1:VPN_NAME} bind-interface ${5:st0.0}
+set security ipsec vpn vpn-${1:VPN_NAME} ike gateway gw-vpn-${1:VPN_NAME}
+set security ipsec vpn vpn-${1:VPN_NAME} ike ipsec-policy ipsec-pol-vpn-${1:VPN_NAME}
+set security ipsec vpn vpn-${1:VPN_NAME} df-bit clear 
+set security ipsec vpn vpn-${1:VPN_NAME} establish-tunnels immediately
+
+set security ike gateway gw-vpn-${1:VPN_NAME} dead-peer-detection
+
+set interfaces ${5:st0.0} family inet address ${6:198.51.100.1/31}
+set interfaces ${5:st0.0} family inet mtu 1436
+set interfaces ${5:st0.0} description "Interface for ${1:VPN_NAME} VPN"
+set security zones security-zone ${7:VPN_ZONE} interfaces ${5:st0.0}
+	]]></content>
+	<tabTrigger>junosvpn</tabTrigger>
+	<description>Route Based VPN for Junos</description>
+</snippet>
