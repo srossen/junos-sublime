@@ -37,7 +37,7 @@ set interfaces ${5:st0.0} description "Interface for ${1:VPN_NAME} VPN"
 set security zones security-zone ${7:VPN_ZONE} interfaces ${5:st0.0}
 
 # This is a otpional section. Mainly used if you connecting to a policy based VPN (such as an ASA) and this is your interesting traffic subnets.
-set security ipsec vpn vpn-${1:VPN_NAME} traffic-selector ${6:TS_NAME} local-ip ${8:198.51.100.0/24} remote-ip ${8:203.0.113.0/24}
+set security ipsec vpn vpn-${1:VPN_NAME} traffic-selector ${6:TS_NAME} local-ip ${8:198.51.100.0/24} remote-ip ${9:203.0.113.0/24}
 	]]></content>
 	<tabTrigger>junosvpn</tabTrigger>
 	<description>Route Based VPN for Junos</description>
