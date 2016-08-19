@@ -3,7 +3,7 @@
 	<![CDATA[
 set security ike proposal ike-prop-vpn-${1:VPN_NAME} authentication-method pre-shared-keys 
 set security ike proposal ike-prop-vpn-${1:VPN_NAME} authentication-algorithm sha1
-set security ike proposal ike-prop-vpn-${1:VPN_NAME} encryption-algorithm aes-128-cbc
+set security ike proposal ike-prop-vpn-${1:VPN_NAME} encryption-algorithm aes-256-cbc
 set security ike proposal ike-prop-vpn-${1:VPN_NAME} lifetime-seconds 28800
 set security ike proposal ike-prop-vpn-${1:VPN_NAME} dh-group group2
 
